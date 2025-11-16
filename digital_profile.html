@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manit M. Chabhadiya | Academic Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-elevated: #ffffff;
+      --bg-accent: #e5e7eb;
+      --text: #111827;
+      --text-muted: #6b7280;
+      --primary: #6366f1;
+      --primary-soft: rgba(99, 102, 241, 0.1);
+      --border: #e5e7eb;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --radius-lg: 1.25rem;
+      --radius-full: 999px;
+      --transition-fast: 0.25s ease;
+    }
+
+    body[data-theme="dark"] {
+      --bg: #020617;
+      --bg-elevated: #020617;
+      --bg-accent: #0b1120;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --primary: #8b5cf6;
+      --primary-soft: rgba(139, 92, 246, 0.15);
+      --border: #1f2937;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #e5e7ff 0, var(--bg) 40%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    body[data-theme="dark"] {
+      background: radial-gradient(circle at top, #020617 0, #020617 40%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      position: sticky;
+      top: 1.25rem;
+      align-self: flex-start;
+      background: rgba(15, 23, 42, 0.02);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      padding: 1.25rem 1.15rem;
+      backdrop-filter: blur(20px);
+    }
+
+    body[data-theme="dark"] .sidebar {
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .logo-main {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 0 0, #a5b4fc, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+    }
+
+    .logo-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .theme-toggle {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.7rem;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      background: rgba(148, 163, 184, 0.1);
+      transition: background var(--transition-fast), transform 0.1s ease;
+    }
+
+    .theme-toggle span.icon {
+      font-size: 0.9rem;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(148, 163, 184, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .toc-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .toc-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.9rem;
+    }
+
+    .toc-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.55rem;
+      border-radius: 999px;
+      color: var(--text-muted);
+      transition: background var(--transition-fast), color var(--transition-fast),
+        transform 0.1s ease;
+    }
+
+    .toc-item a span.bullet {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+    }
+
+    .toc-item a:hover {
+      background: var(--primary-soft);
+      color: var(--primary);
+      transform: translateX(1px);
+    }
+
+    .toc-item a.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .toc-item a.active span.bullet {
+      border-color: var(--primary);
+    }
+
+    .sidebar-footer {
+      margin-top: 1.25rem;
+      border-top: 1px dashed var(--border);
+      padding-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: var(--bg-accent);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    body[data-theme="dark"] .pill {
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .pill span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .social-chip {
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      background: rgba(148, 163, 184, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .social-chip span.icon {
+      font-size: 0.85rem;
+    }
+
+    /* Main content */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    section {
+      background: rgba(248, 250, 252, 0.8);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem 1.3rem 1.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body[data-theme="dark"] section {
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      border-color: rgba(30, 64, 175, 0.65);
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.16), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 650;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .section-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .section-tagline {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .chip {
+      font-size: 0.76rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+    }
+
+    body[data-theme="dark"] .chip {
+      background: rgba(15, 23, 42, 0.8);
+      border-color: rgba(55, 65, 81, 0.9);
+    }
+
+    .two-col {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    }
+
+    @media (max-width: 700px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .muted {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .highlight-box {
+      border-radius: 1rem;
+      border: 1px dashed rgba(148, 163, 184, 0.9);
+      padding: 0.8rem 0.9rem;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    body[data-theme="dark"] .highlight-box {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    body[data-theme="dark"] .badge {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .badge span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.5rem 0;
+      font-size: 0.92rem;
+    }
+
+    .list li {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .list li::before {
+      content: "•";
+      color: var(--primary);
+      margin-top: 0.05rem;
+    }
+
+    /* Cover section */
+    .cover-grid {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1.4fr);
+      gap: 1rem;
+      align-items: center;
+    }
+
+    @media (max-width: 680px) {
+      .cover-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .avatar-wrap {
+      width: 120px;
+      height: 120px;
+      border-radius: 36px;
+      padding: 3px;
+      background: conic-gradient(
+        from 180deg,
+        #6366f1,
+        #ec4899,
+        #22c55e,
+        #6366f1
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cover-main-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .cover-subline {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.55rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .tagline-banner {
+      margin-top: 0.5rem;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      padding: 0.35rem 0.6rem;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .btn {
+      border-radius: var(--radius-full);
+      padding: 0.4rem 0.85rem;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.12s ease, box-shadow var(--transition-fast),
+        background var(--transition-fast), color var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: white;
+      box-shadow: 0 12px 25px rgba(79, 70, 229, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    body[data-theme="dark"] .btn-outline {
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-sm {
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .pill-submission {
+      font-size: 0.8rem;
+      border-radius: 999px;
+      padding: 0.25rem 0.6rem;
+      background: rgba(15, 23, 42, 0.03);
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+    }
+
+    /* Cards & grids */
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .card {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0.7rem 0.8rem;
+      font-size: 0.88rem;
+    }
+
+    body[data-theme="dark"] .card {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(51, 65, 85, 0.9);
+    }
+
+    .card label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .card strong {
+      font-weight: 600;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.3rem;
+    }
+
+    .pill-small {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.15);
+    }
+
+    body[data-theme="dark"] .pill-small {
+      background: rgba(31, 41, 55, 0.8);
+    }
+
+    /* Code snippet */
+    pre {
+      background: #020617;
+      color: #e5e7eb;
+      padding: 0.8rem 0.9rem;
+      border-radius: 0.8rem;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      border: 1px solid #1e293b;
+      margin: 0.5rem 0;
+    }
+
+    body[data-theme="dark"] pre {
+      background: #000000;
+    }
+
+    code {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    /* Timeline */
+    .timeline {
+      border-left: 1px dashed rgba(148, 163, 184, 0.9);
+      padding-left: 0.8rem;
+      margin: 0.4rem 0;
+    }
+
+    .timeline-item {
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1.15rem;
+      top: 0.2rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .timeline-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* SWOT */
+    .swot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.7rem;
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+    }
+
+    .swot-card {
+      border-radius: 0.9rem;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    body[data-theme="dark"] .swot-card {
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .swot-card h4 {
+      margin: 0 0 0.15rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .swot-card ul {
+      list-style: disc;
+      padding-left: 1.1rem;
+      margin: 0;
+    }
+
+    .swot-card li {
+      margin-bottom: 0.2rem;
+    }
+
+    /* Testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .testimonial {
+      border-radius: 1rem;
+      padding: 0.85rem 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 0.88rem;
+      position: relative;
+    }
+
+    body[data-theme="dark"] .testimonial {
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .testimonial::before {
+      content: "“";
+      position: absolute;
+      top: -0.75rem;
+      left: 0.4rem;
+      font-size: 2.2rem;
+      color: var(--primary-soft);
+    }
+
+    .testimonial-footer {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    .page-footer {
+      margin-top: 1rem;
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .back-to-top {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.8rem;
+      display: inline-flex;
+      gap: 0.4rem;
+      align-items: center;
+      cursor: pointer;
+      background: rgba(148, 163, 184, 0.08);
+    }
+
+    body[data-theme="dark"] .back-to-top {
+      background: rgba(15, 23, 42, 0.85);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar" id="toc">
+      <div class="logo-row">
+        <div class="logo-main">
+          <div class="logo-circle">M</div>
+          <div class="logo-text">Academic Portfolio</div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" type="button">
+          <span class="icon" id="themeIcon">🌙</span>
+          <span id="themeLabel">Dark</span>
+        </button>
+      </div>
+      <div class="toc-title">Contents</div>
+      <div class="toc-subtitle">Click to jump to any section</div>
+      <ul class="toc-list">
+        <li class="toc-item">
+          <a href="#cover"><span class="bullet">1</span> Cover Page</a>
+        </li>
+        <li class="toc-item">
+          <a href="#introduction"><span class="bullet">2</span> Introduction & Learning Philosophy</a>
+        </li>
+        <li class="toc-item">
+          <a href="#resume"><span class="bullet">3</span> Resume / CV</a>
+        </li>
+        <li class="toc-item">
+          <a href="#projects"><span class="bullet">4</span> Interdisciplinary Projects & Research</a>
+        </li>
+        <li class="toc-item">
+          <a href="#skills"><span class="bullet">5</span> Advanced Skill Development</a>
+        </li>
+        <li class="toc-item">
+          <a href="#collaboration"><span class="bullet">6</span> Collaborative & Leadership</a>
+        </li>
+        <li class="toc-item">
+          <a href="#ethics"><span class="bullet">7</span> Global & Ethical Perspective</a>
+        </li>
+        <li class="toc-item">
+          <a href="#future"><span class="bullet">8</span> Future Aspirations</a>
+        </li>
+        <li class="toc-item">
+          <a href="#conclusion"><span class="bullet">9</span> Conclusion & Self-Assessment</a>
+        </li>
+        <li class="toc-item">
+          <a href="#testimonials"><span class="bullet">10</span> Testimonials</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="pill">
+          <span class="dot"></span>
+          <span>Responsive • Modern UI • Dual Theme</span>
+        </div>
+        <div class="social-links">
+          <a class="social-chip" href="https://www.linkedin.com/in/manit-chabhadiya-6541202b2/" target="_blank" rel="noreferrer">
+            <span class="icon">in</span>
+            <span>LinkedIn</span>
+          </a>
+          <a class="social-chip" href="https://github.com/" target="_blank" rel="noreferrer">
+            <span class="icon">{"</>"}</span>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- 1. Cover Page -->
+      <section id="cover">
+        <div class="section-header">
+          <div class="section-title">Cover Page</div>
+          <div class="section-meta">Overview</div>
+        </div>
+        <p class="section-tagline">
+          Professional snapshot with academic identity and submission details.
+        </p>
+        <div class="cover-grid">
+          <div>
+            <div class="avatar-wrap">
+              <div class="avatar-inner">
+                <!-- Save your photo as manit-photo.jpg in the same folder, or change src -->
+                <img src="E:\Family Documents\MANIT\MANIT PP-min (1) (2).jpg" alt="Manit M. Chabhadiya" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="cover-main-title">Manit M. Chabhadiya</div>
+            <div class="cover-subline">
+              Undergraduate Student · Computer Engineering · Aspiring Software Engineer
+            </div>
+            <div class="cover-meta">
+              <span>Program: B.Tech in Computer Engineering</span>
+              <span>•</span>
+              <span>Institution: Pandit Deendayal Energy University (PDEU), Gandhinagar</span>
+            </div>
+            <div class="cover-meta">
+              <span>Portfolio Focus: Academics, Projects, and Interdisciplinary Learning</span>
+              <span>•</span>
+              <span id="submissionDate">Submission Date: DD MMM YYYY</span>
+            </div>
+            <div class="tagline-banner">
+              <span>“Building systems that are technically sound, ethically grounded, and globally aware.”</span>
+            </div>
+            <div class="cta-row">
+              <a href="https://www.linkedin.com/in/manit-chabhadiya-6541202b2/" class="btn btn-primary" target="_blank" rel="noreferrer">
+                <span>View LinkedIn</span> <span>↗</span>
+              </a>
+              <a href="https://github.com/" class="btn btn-outline" target="_blank" rel="noreferrer">
+                <span>GitHub</span> <span>↗</span>
+              </a>
+              <button type="button" class="btn btn-outline btn-sm" onclick="window.location.href='#resume'">
+                View Resume
+              </button>
+            </div>
+            <div style="margin-top:0.6rem;">
+              <span class="pill-submission">
+                <span>Platform:</span>
+                <strong>Personal Responsive Website</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Introduction & Learning Philosophy -->
+      <section id="introduction">
+        <div class="section-header">
+          <div class="section-title">Introduction & Learning Philosophy</div>
+          <div class="section-meta">Introduction</div>
+        </div>
+        <p class="section-tagline">
+          Personal journey, values, and the mindset guiding my academic decisions.
+        </p>
+        <div class="two-col">
+          <div>
+            <p>
+              I am an undergraduate computer engineering student at Pandit Deendayal
+              Energy University (PDEU), Gandhinagar, who enjoys taking ideas from rough
+              notes to working prototypes. My learning journey has been a mix of
+              classroom theory, hands-on coding, finance-focused hackathons, and
+              interdisciplinary exploration across design, data, and human behavior.
+            </p>
+            <p>
+              My learning philosophy is built on three pillars:
+            </p>
+            <ul class="list">
+              <li><strong>Learn by building:</strong> I understand concepts best when I convert them into working code or systems.</li>
+              <li><strong>Stay interdisciplinary:</strong> I try to connect computer science with domains like finance, sustainability, and user experience.</li>
+              <li><strong>Reflect and iterate:</strong> After each project, I review what worked, what broke, and what to improve next time.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="highlight-box">
+              <div class="badge">
+                <span class="dot"></span>
+                <span>Core Values</span>
+              </div>
+              <ul class="list" style="margin-top:0.35rem;">
+                <li><strong>Curiosity:</strong> Asking “why” and “what if” before jumping into tools.</li>
+                <li><strong>Clarity:</strong> Writing clean, readable code and documenting decisions.</li>
+                <li><strong>Responsibility:</strong> Thinking about privacy, fairness, and long-term impact of technology.</li>
+                <li><strong>Consistency:</strong> Showing up regularly in both academics and fitness to keep momentum.</li>
+              </ul>
+              <p class="muted" style="margin-top:0.3rem;">
+                This portfolio reflects that mindset: each section connects what I
+                learned, how I applied it, and why it matters.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Resume / CV -->
+      <section id="resume">
+        <div class="section-header">
+          <div class="section-title">Resume / CV</div>
+          <div class="section-meta">Profile</div>
+        </div>
+        <p class="section-tagline">
+          Snapshot of my education, experience, skills, and engagements.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <div class="chips-row">
+              <span class="chip">Education</span>
+              <span class="chip">Projects & Experience</span>
+              <span class="chip">Skills</span>
+              <span class="chip">Certifications</span>
+              <span class="chip">Co-Curricular</span>
+            </div>
+
+            <h3 style="margin:0.7rem 0 0.25rem;font-size:1rem;">Education</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-title">B.Tech in Computer Engineering</div>
+                <div class="timeline-meta">Pandit Deendayal Energy University (PDEU), Gandhinagar · 2023 – Present</div>
+                <p class="muted">
+                  Relevant coursework: Data Structures, Operating Systems, Computer Networks, Database Management, Software Engineering, and introductory AI/ML.
+                </p>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-title">Higher Secondary (Science)</div>
+                <div class="timeline-meta">L.P. Savani Vidhyabhavan, Surat · Completed: 2023</div>
+                <p class="muted">
+                  Physics, Chemistry, Mathematics, and Computer-related subjects with project-based learning.
+                </p>
+              </div>
+            </div>
+
+            <h3 style="margin:0.6rem 0 0.25rem;font-size:1rem;">Academic Experience</h3>
+            <div class="card">
+              <label>Major Academic Project</label>
+              <strong>Full-Stack Student Utility Portal</strong> — College Project<br />
+              <span class="muted">PDEU · Ongoing</span>
+              <ul class="list">
+                <li>Designed and implemented a web portal where students can track assignments, notes, and important deadlines in one place.</li>
+                <li>Used HTML, CSS, JavaScript, and a simple backend with database integration for storing user data.</li>
+                <li>Practised version control using Git and collaborated with teammates using GitHub.</li>
+              </ul>
+            </div>
+            <div class="card" style="margin-top:0.5rem;">
+              <label>Areas of Interest</label>
+              <div class="pill-row">
+                <span class="pill-small">Full-Stack Development</span>
+                <span class="pill-small">Software Engineering</span>
+                <span class="pill-small">Computer Networks</span>
+                <span class="pill-small">Finance-Oriented Applications</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="margin:0.3rem 0 0.25rem;font-size:1rem;">Technical Skills</h3>
+            <div class="grid-2">
+              <div class="card">
+                <label>Programming</label>
+                <strong>C, C++, Python, Java (basic)</strong>
+              </div>
+              <div class="card">
+                <label>Web</label>
+                <strong>HTML, CSS, JavaScript, basic React</strong>
+              </div>
+              <div class="card">
+                <label>Tools</label>
+                <strong>Git & GitHub, VS Code, Linux basics</strong>
+              </div>
+              <div class="card">
+                <label>Databases</label>
+                <strong>MySQL, SQLite</strong>
+              </div>
+            </div>
+
+            <h3 style="margin:0.6rem 0 0.25rem;font-size:1rem;">Soft Skills</h3>
+            <ul class="list">
+              <li>Team collaboration and clear communication.</li>
+              <li>Structured problem-solving and debugging.</li>
+              <li>Balancing academics, projects, and fitness with time management.</li>
+            </ul>
+
+            <h3 style="margin:0.6rem 0 0.25rem;font-size:1rem;">Certifications & Activities</h3>
+            <ul class="list">
+              <li>NPTEL: <strong>Introduction to Aerospace Engineering – Flight</strong> (2025).</li>
+              <li>Participant in a <strong>Finance Hackathon</strong> — built a prototype for a personal expense and investment tracking dashboard.</li>
+              <li>Engaged in coding practice, lab work, and peer discussions for subjects like CN and SE.</li>
+            </ul>
+
+            <h3 style="margin:0.6rem 0 0.25rem;font-size:1rem;">Hobbies</h3>
+            <p class="muted">
+              Strength training and gym, playing cricket, exploring new developer tools, and following technology and finance content online.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Interdisciplinary Projects & Research -->
+      <section id="projects">
+        <div class="section-header">
+          <div class="section-title">Interdisciplinary Projects & Research</div>
+          <div class="section-meta">Projects</div>
+        </div>
+        <p class="section-tagline">
+          Projects that connect computer engineering with other domains and real-world problems.
+        </p>
+
+        <div class="grid-3">
+          <!-- Project 1 -->
+          <div class="card">
+            <label>Project 1</label>
+            <strong>Smart Campus Energy Dashboard</strong>
+            <p class="muted">
+              A conceptual project where I explored how IoT data and web dashboards can help a campus reduce electricity usage.
+            </p>
+            <ul class="list">
+              <li><strong>Objectives:</strong> Visualize energy consumption across buildings and highlight peak usage hours.</li>
+              <li><strong>Methodology:</strong> Used dummy sensor readings stored in a database and displayed them using charts on a web page.</li>
+              <li><strong>Outcomes:</strong> Identified patterns like heavy usage during specific time slots and proposed schedule adjustments.</li>
+              <li><strong>Challenges:</strong> Designing charts that would be understandable for non-technical users.</li>
+            </ul>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="card">
+            <label>Project 2</label>
+            <strong>Mental Well-Being Check-In App</strong>
+            <p class="muted">
+              A simple app idea to allow students to log their mood and track stress patterns over time.
+            </p>
+            <ul class="list">
+              <li><strong>Objectives:</strong> Provide a private and low-friction way for students to reflect on their mood daily.</li>
+              <li><strong>Methodology:</strong> Built screens for mood logging and used basic charts to show weekly trends.</li>
+              <li><strong>Outcomes:</strong> Helped me understand the importance of data privacy and responsible handling of personal information.</li>
+              <li><strong>Challenges:</strong> Choosing the right questions so that the app felt helpful rather than intrusive.</li>
+            </ul>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="card">
+            <label>Project 3</label>
+            <strong>Traffic-Aware Bus Scheduling Prototype</strong>
+            <p class="muted">
+              A Python-based prototype focusing on improving bus arrival timings for students using simple traffic assumptions.
+            </p>
+            <ul class="list">
+              <li><strong>Objectives:</strong> Reduce waiting time at bus stops during peak college hours.</li>
+              <li><strong>Methodology:</strong> Wrote scripts to calculate travel times between stops and simulated different schedules.</li>
+              <li><strong>Outcomes:</strong> Proposed a revised time table which, in simulation, reduced average waiting time.</li>
+              <li><strong>Challenges:</strong> Dealing with real-life constraints like fixed bus routes and limited vehicles.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Advanced Skill Development and Mastery -->
+      <section id="skills">
+        <div class="section-header">
+          <div class="section-title">Advanced Skill Development & Mastery</div>
+          <div class="section-meta">Skills</div>
+        </div>
+        <p class="section-tagline">
+          Key skills I’m actively sharpening, with small artefacts and evidence.
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <label>Skill — Technical</label>
+            <strong>Full-Stack Web Development</strong>
+            <p class="muted">
+              I regularly practise building small web apps that include both frontend and basic backend logic.
+            </p>
+            <p><strong>Artefact:</strong> Code snippet from a simple API-based data fetch:</p>
+            <pre><code>fetch("/api/stats")
+  .then(res =&gt; res.json())
+  .then(data =&gt; {
+    setStats(data);
+  })
+  .catch(err =&gt; console.error(err));</code></pre>
+          </div>
+
+          <div class="card">
+            <label>Skill — Soft</label>
+            <strong>Team Communication & Documentation</strong>
+            <p class="muted">
+              In group assignments and projects, I usually take responsibility for writing clear task lists and basic documentation.
+            </p>
+            <p><strong>Artefact:</strong> Sample sprint structure I follow:</p>
+            <ul class="list">
+              <li>Day 1: Finalize problem statement and rough wireframes.</li>
+              <li>Day 2–3: Implement core logic and database structure.</li>
+              <li>Day 4–5: UI integration, testing, and final clean-up.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <label>Skill — Creative</label>
+            <strong>UI/UX & Design Thinking</strong>
+            <p class="muted">
+              I experiment with layouts, dark/light modes, and small details that make interfaces easy to use.
+            </p>
+            <p><strong>Artefact:</strong> This portfolio itself, with responsive design and a theme toggle, reflects my design choices.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Collaborative & Leadership Experiences -->
+      <section id="collaboration">
+        <div class="section-header">
+          <div class="section-title">Collaborative & Leadership Experiences</div>
+          <div class="section-meta">Collaboration</div>
+        </div>
+        <p class="section-tagline">
+          Roles taken in teams, how we worked together, and what I learned.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3 style="margin:0 0 0.25rem;font-size:1rem;">Finance Hackathon — Team Role</h3>
+            <p>
+              I participated in a finance-focused hackathon where our team designed a
+              prototype that helped users track expenses and simple investment goals.
+            </p>
+            <ul class="list">
+              <li><strong>Role:</strong> Worked on the frontend screens and helped define the basic data structure for transactions.</li>
+              <li><strong>Team Dynamics:</strong> Split work into frontend, backend, and presentation, with regular check-ins to merge progress.</li>
+              <li><strong>Conflict Handling:</strong> When there were different ideas for features, we prioritised based on time available and what would be most useful in a demo.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="highlight-box">
+              <div class="badge">
+                <span class="dot"></span>
+                <span>Key learnings</span>
+              </div>
+              <ul class="list" style="margin-top:0.3rem;">
+                <li>Clear division of work and deadlines keeps the project moving.</li>
+                <li>Listening to teammates’ ideas often leads to better solutions.</li>
+                <li>Even in short events, basic documentation and naming conventions save time.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Global Awareness & Ethical Considerations -->
+      <section id="ethics">
+        <div class="section-header">
+          <div class="section-title">Global Awareness & Ethical Considerations</div>
+          <div class="section-meta">Ethics</div>
+        </div>
+        <p class="section-tagline">
+          How global issues and ethics shape the way I think about technology.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3 style="margin:0 0 0.25rem;font-size:1rem;">Data Privacy in Student Applications</h3>
+            <p>
+              While working on ideas like the mental well-being app and finance tools,
+              I realised that even “simple” data such as mood logs or spending
+              patterns can reveal a lot about a person.
+            </p>
+            <ul class="list">
+              <li><strong>Issue:</strong> Storing personal and behavioural data that could be misused if not handled carefully.</li>
+              <li><strong>Ethical Concern:</strong> Risk of exposing sensitive information or using it without clear consent.</li>
+              <li><strong>Response:</strong> Minimising collected data, avoiding unnecessary personal identifiers, and keeping the user informed about how data is used.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="highlight-box">
+              <p><strong>Global Perspective:</strong></p>
+              <p class="muted">
+                Technology today reaches users across different countries and laws. This
+                makes me think about:
+              </p>
+              <ul class="list">
+                <li>Being transparent about what data is stored and why.</li>
+                <li>Designing settings that default to safer and more private choices.</li>
+                <li>Considering performance and accessibility for users with limited devices or connectivity.</li>
+              </ul>
+              <p class="muted" style="margin-top:0.3rem;">
+                I want my future projects to balance innovation with responsibility,
+                instead of only focusing on features.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Future Aspirations & Professional Development -->
+      <section id="future">
+        <div class="section-header">
+          <div class="section-title">Future Aspirations & Professional Development</div>
+          <div class="section-meta">Goals</div>
+        </div>
+        <p class="section-tagline">
+          Where I want to go next and how I plan to grow.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3 style="margin:0 0 0.25rem;font-size:1rem;">Short-Term (Next 1–2 Years)</h3>
+            <ul class="list">
+              <li>Strengthen core CS fundamentals in subjects like DSA, OS, DBMS, and CN.</li>
+              <li>Build a few complete full-stack projects that are deployable and documented.</li>
+              <li>Use platforms like GitHub to showcase consistent coding activity.</li>
+            </ul>
+
+            <h3 style="margin:0.5rem 0 0.25rem;font-size:1rem;">Long-Term (3–5 Years)</h3>
+            <ul class="list">
+              <li>Work as a software engineer on scalable web or backend systems.</li>
+              <li>Explore roles that combine software engineering with finance or product thinking.</li>
+              <li>Consider advanced learning options such as specialized certifications or higher studies depending on interest and opportunity.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="highlight-box">
+              <p><strong>Continuous Improvement Strategy:</strong></p>
+              <ul class="list">
+                <li>Maintain a simple learning log of courses, projects, and mistakes learned from.</li>
+                <li>Regularly seek feedback from faculty like Prof. Shakti Mishra and Prof. Yogesh Kumar, seniors, and peers.</li>
+                <li>Present projects in class or events to build confidence in explaining technical work.</li>
+              </ul>
+              <p class="muted" style="margin-top:0.3rem;">
+                This portfolio will keep evolving as I grow in the program and take
+                on more complex work.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. Conclusion & Self-Assessment -->
+      <section id="conclusion">
+        <div class="section-header">
+          <div class="section-title">Conclusion & Self-Assessment</div>
+          <div class="section-meta">Reflection</div>
+        </div>
+        <p class="section-tagline">
+          Final reflections, self-evaluation, and SWOT analysis.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <p>
+              Looking at my journey so far, I see a clear pattern: I learn best when I
+              take a topic from theory to code and then reflect on what happened.
+              Compared to my initial expectations in first year, I now have:
+            </p>
+            <ul class="list">
+              <li>Built a stable base in core programming and basic web development.</li>
+              <li>Explored interdisciplinary ideas that connect computer engineering with finance and daily life problems.</li>
+              <li>Improved how I collaborate and communicate within teams.</li>
+            </ul>
+            <p class="muted">
+              At the same time, I want deeper understanding in areas like system
+              design, large-scale architecture, and more advanced algorithms, which
+              shapes my next steps.
+            </p>
+          </div>
+          <div>
+            <div class="swot-grid">
+              <div class="swot-card">
+                <h4>Strengths</h4>
+                <ul>
+                  <li>Curiosity and willingness to experiment and learn.</li>
+                  <li>Hands-on mindset: I enjoy converting ideas to small prototypes.</li>
+                </ul>
+              </div>
+              <div class="swot-card">
+                <h4>Weaknesses</h4>
+                <ul>
+                  <li>Sometimes spend extra time on UI polish early in a project.</li>
+                  <li>Need to push myself more on theoretical problem-solving practice.</li>
+                </ul>
+              </div>
+              <div class="swot-card">
+                <h4>Opportunities</h4>
+                <ul>
+                  <li>Growing tech and startup ecosystem in India.</li>
+                  <li>Access to online resources, NPTEL courses, and hackathons.</li>
+                </ul>
+              </div>
+              <div class="swot-card">
+                <h4>Threats</h4>
+                <ul>
+                  <li>Fast-changing technology requiring continuous learning.</li>
+                  <li>High competition in software roles and internships.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. Testimonials -->
+      <section id="testimonials">
+        <div class="section-header">
+          <div class="section-title">Testimonials</div>
+          <div class="section-meta">Feedback</div>
+        </div>
+        <p class="section-tagline">
+          Feedback-style statements from faculty and peers highlighting my working style.
+        </p>
+
+        <div class="testimonial-grid">
+          <div class="testimonial">
+            Manit shows consistency in his effort and a genuine interest in building
+            practical solutions. He is receptive to feedback and steadily improving his
+            fundamentals in computer engineering.
+            <div class="testimonial-footer">
+              — Prof. Shakti Mishra, Department of Computer Science, PDEU
+            </div>
+          </div>
+          <div class="testimonial">
+            Working with Manit in team-based coursework and events, I have seen that he
+            takes responsibility for his tasks and helps maintain clarity in the
+            project. He is dependable and focused when deadlines are near.
+            <div class="testimonial-footer">
+              — Prof. Yogesh Kumar, Department of Computer Science, PDEU
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="page-footer">
+        <button class="back-to-top" type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <span>Back to Top</span> <span>↑</span>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Theme handling
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
+    const themeLabel = document.getElementById("themeLabel");
+
+    function setTheme(theme) {
+      body.setAttribute("data-theme", theme);
+      if (theme === "dark") {
+        themeIcon.textContent = "🌙";
+        themeLabel.textContent = "Dark";
+      } else {
+        themeIcon.textContent = "☀️";
+        themeLabel.textContent = "Light";
+      }
+      localStorage.setItem("portfolio-theme", theme);
+    }
+
+    const savedTheme = localStorage.getItem("portfolio-theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      setTheme("light");
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const current = body.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    });
+
+    // Submission date (today)
+    const dateEl = document.getElementById("submissionDate");
+    const now = new Date();
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    dateEl.textContent = "Submission Date: " + now.toLocaleDateString("en-GB", options);
+
+    // Active TOC item on scroll
+    const tocLinks = document.querySelectorAll(".toc-item a");
+    const sections = Array.from(document.querySelectorAll("main section"));
+
+    function updateActiveToc() {
+      const scrollPos = window.scrollY + 120;
+      let currentId = "";
+      for (const sec of sections) {
+        const rect = sec.getBoundingClientRect();
+        const top = rect.top + window.scrollY;
+        if (scrollPos >= top) {
+          currentId = sec.id;
+        }
+      }
+      tocLinks.forEach((link) => {
+        if (link.getAttribute("href") === "#" + currentId) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", updateActiveToc);
+    updateActiveToc();
+  </script>
+</body>
+</html>
